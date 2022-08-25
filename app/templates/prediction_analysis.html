@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block regression_analysis %}active{% endblock %}
+{% block content %}
+<h1>Q3: Given the size, location and date, can you predict the cause of a wildfire?</h1>
+
+ <!-- Main Input For Receiving Query to our ML -->
+<form action="{{ url_for('prediction')}}"method="post">
+	<!-- <input type="text" name="YearsExperience" placeholder="YearsExperience" required="required" />
+ -->
+    <button type="submit" class="btn btn-primary">Predict</button>
+</form>
+
+<h4 style="visibility:{{ visibility }}"> Model:</h4> <p style="visibility:{{ visibility }}">Random Forest.</p>
+<h4 style="visibility:{{ visibility }}"> Accuracy:</h4> <p style="visibility:{{ visibility }}">{{ accuracy }}.</p>
+<h4 style="visibility:{{ visibility }}"> Features:</h4> <p style="visibility:{{ visibility }}"> size of fire, latitude, longitude, year, month. </p>
+
+<h4 style="visibility:{{ visibility }}">Confusion Matrix: </h4>
+
+<div style="visibility:{{ visibility }}">
+    <table style="width:100%", border = "1">
+            <tr>
+                <th></th>
+                {% for label in labels %}    
+                        <th>{{ label }}</th>
+                {% endfor %}
+            </tr>
+            {% for index in range(matrix|count) %}    
+            <tr>               
+                <th> {{ labels[index] }} </th>
+                {% for index_2 in range(matrix[index]|count) %}    
+                    <td>{{ matrix[index][index_2] }}</td>
+                {% endfor %}    
+            </tr>
+            {% endfor %}    
+    </table>
+</div>
+
+<p style="visibility:{{ visibility }}">The cause of the wildfires can be so many, for this model I decided to reduce the number of possible causes to improve model accuracy. I reduced them to: Nature, Accident, Human and Other. <br><br>
+
+The prediction of the model is very low, and we can notice that it only performs well for nature label. Including more variables and doing a correlation analysis would definetely improve the model prediction accuracy.
+</p>
+{% endblock %}
