@@ -1,5 +1,4 @@
-# canonical_technical_assessment
-Technical assessment for canonical interview process
+# us_wildfire_analysis
 
 How to run the project?
 
